@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lista de Tarefas</title>
+</head>
+<body>
+	<h1>Lista de Tarefas</h1>
+
+	<div id="adicionar-tarefa">	
+		<div>
+			<div id="input-tarefa">
+				<label for="tarefa">Tarefa</label>
+				<input type="text" name="tarefa" id="tarefa">
+			</div>
+			<div id="input-responsavel">
+				<label for="responsavel">Responsável</label>
+				<input type="text" name="responsavel" id="responsavel">
+			</div>
+			<div id="input-prazo">
+				<label for="prazo">Prazo previsto</label>
+				<input type="date" name="prazo" id="prazo">
+			</div>
+			<input type="button" id="btn_add" value="Adicionar">
+		</div>
+	</div>
+
+	<div>
+		<h2>Tarefas Pendentes</h2>
+		<ul id="tarefas-pendentes">
+
+		</ul>
+	
+	</div>
+
+	<div>
+		<h2>Tarefas Realizadas</h2>
+		<ul id="tarefas-realizadas">
+
+		</ul>
+		
+	</div>
+
+	<script>
+		
+		var add_tarefa = function () {
+			var tarefas_pendentes = document.getElementById("tarefas-pendentes");
+			
+			var tarefa = document.getElementById("tarefa");
+			var responsavel = document.getElementById("responsavel");
+			var prazo = document.getElementById("prazo");
+
+			var list_item = document.createElement('li');
+
+			var text = document.createTextNode(tarefa.value + ", " + responsavel.value + ", " + prazo.value);
+
+			var btn_remover = document.createElement("button");
+			btn_remover.innerHTML = "X";
+			btn_remover.className = "remover";
+			btn_remover.onclick = remover_tarefa;
+
+			var btn_concluir = document.createElement("button");
+			btn_concluir.innerHTML = " V";
+			btn_concluir.className = "concluir";
+			btn_concluir.onclick = concluir_tarefa;
+			
+			list_item.appendChild(text);
+			list_item.appendChild(btn_remover);
+			list_item.appendChild(btn_concluir);
+
+			tarefas_pendentes.appendChild(list_item);
+			
+		};
+
+		var remover_tarefa = function () {
+			let listItem = this.parentNode;
+			let ul=listItem.parentNode;
+			ul.removeChild(listItem);
+		};
+
+		var concluir_tarefa = function () {
+			let tarefas_realizadas = document.getElementById("tarefas-realizadas");
+
+			let listItem = this.parentNode;
+			let ul=listItem.parentNode;
+			ul.removeChild(listItem);
+
+			listItem.removeChild(listItem.lastElementChild);
+
+			tarefas_realizadas.appendChild(listItem);
+		};
+
+		var btn_add = document.getElementById('btn_add');
+
+		btn_add.addEventListener("click",add_tarefa);
+
+	</script>
+</body>
+</html>
