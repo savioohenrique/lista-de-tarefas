@@ -84,9 +84,9 @@ var remover_tarefa = function () {
     ul.removeChild(listItem);
 };
 
-var btn_add = document.getElementById('btn_add');
+// var btn_add = document.getElementById('btn_add');
 
-btn_add.addEventListener("click",add_tarefa);
+// btn_add.addEventListener("click",add_tarefa);
 
 let lista_de_tarefas_pendentes = document.getElementById("tarefas-pendentes");
 let lista_de_tarefas_completas = document.getElementById("tarefas-realizadas");
