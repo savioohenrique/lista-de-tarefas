@@ -8,7 +8,7 @@ var add_tarefa = function () {
     let list_item = document.createElement('li');
 
     let text = document.createElement("label");
-    text.innerHTML = tarefa.value + " | " + responsavel.value + " | " + prazo.value;
+    text.innerHTML = tarefa.value + " | " + responsavel.value + " | " + prazo.value + " ";
 
     let btn_remover = document.createElement("button");
     btn_remover.innerHTML = "X";
@@ -70,9 +70,9 @@ var mover_tarefa = function () {
     let listItem = this.parentNode;
     if (this.checked == true) {
         lista_de_tarefas_pendentes.removeChild(listItem);
-        lista_de_tarefas_completas.appendChild(listItem);
+        lista_de_tarefas_concluidas.appendChild(listItem);
     } else {
-        lista_de_tarefas_completas.removeChild(listItem);
+        lista_de_tarefas_concluidas.removeChild(listItem);
         lista_de_tarefas_pendentes.appendChild(listItem);   
     }
 };
@@ -84,9 +84,55 @@ var remover_tarefa = function () {
     ul.removeChild(listItem);
 };
 
-// var btn_add = document.getElementById('btn_add');
+var save_lists = () => {
+    let tarefas_pendentes = gerar_json(lista_de_tarefas_pendentes);
+    let tarefas_concluidas = gerar_json(lista_de_tarefas_concluidas);
 
-// btn_add.addEventListener("click",add_tarefa);
+    tarefas_pendentes.unshift('Tarefas Pendentes');
+    tarefas_concluidas.unshift('Tarefas Concluidas');
+
+    console.log(tarefas_pendentes);
+    console.log(tarefas_concluidas);
+
+    let tarefas = new Array();
+
+    tarefas.push(tarefas_pendentes);
+    tarefas.push(tarefas_concluidas);
+
+    console.log(tarefas);
+
+    let tarefas_json = JSON.stringify(tarefas);
+
+    console.log(tarefas_json);
+
+    var jsonArray = JSON.parse(JSON.stringify(tarefas));
+
+    console.log(jsonArray);
+
+};
+
+function  gerar_json(lista) {
+    let tarefas = new Array();
+    
+    let lista_de_tarefas = lista.getElementsByTagName('label');
+
+    for (let i = 0; i < lista_de_tarefas.length; i++) {
+
+        let tarefa = lista_de_tarefas[i].innerText.split(" | ");
+
+        let nome_tarefa = tarefa[0];
+        let responsavel = tarefa[1];
+        let prazo =       tarefa[2];
+
+        tarefas.push({
+            tarefa : nome_tarefa,
+            responsavel : responsavel,
+            prazo : prazo
+        });
+    }
+
+    return tarefas;
+}
 
 let lista_de_tarefas_pendentes = document.getElementById("tarefas-pendentes");
-let lista_de_tarefas_completas = document.getElementById("tarefas-realizadas");
+let lista_de_tarefas_concluidas = document.getElementById("tarefas-realizadas");
